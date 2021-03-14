@@ -39,7 +39,7 @@ Then, copy the example environment file and edit as necessary.
 ```sh
 cp .env.example .env
 ```
-> NOTE: Don't forget to setup the mail driver. In the .env.example file is set as sendmail, but you can choose any of the drivers available for Laravel (mailgun for example).
+> NOTE: Don't forget to setup the **mail driver** and the **database connection**. In the .env.example file the mail driver is set as sendmail, but you can choose any of the drivers available for Laravel (mailgun for example).
 
 Generate encription key and database migrations:
 ```sh
