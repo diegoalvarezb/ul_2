@@ -56,7 +56,7 @@ There are only two routes:
 
 
 
-# Tests
+## Tests
 
 To execute phpunit:
 ```sh
@@ -70,7 +70,7 @@ php artisan test --parallel
 
 
 
-# Screens
+## Screens
 
 ![Result screen](https://github.com/diegoalvarezb/ul_2/blob/master/resources/screens/readme_screen_1.png?raw=true)
 ![Result screen](https://github.com/diegoalvarezb/ul_2/blob/master/resources/screens/readme_screen_2.png?raw=true)
@@ -85,6 +85,6 @@ php artisan test --parallel
 
 
 
-# Comments
+## Comments
 
 The ticket limits are defined as constants inside the application (in the file `app/config/constants.php`). I thougth about setting them inside the database, but I choose the other way in order to avoid extra queries on the database. If these limits are susceptible of changing we can move them to the database, so they can be changed easily.
