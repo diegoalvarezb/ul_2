@@ -25,9 +25,9 @@ class QRService extends Service
     /**
      * Create a new QR instance.
      *
-     * @return QRCode
+     * @return chillerlan\QRCode\QRCode
      */
-    protected function getQRInstance()
+    protected function getQRInstance() : QRCode
     {
         $qrOptions = new QROptions([
             'outputType'  => QRCode::OUTPUT_IMAGE_PNG,

@@ -61,11 +61,6 @@ class TicketController extends Controller
         // create ticket
         $result = $this->ticketService->create($data);
 
-        // keep old input when there are errors
-        if (!$result['success']) {
-            $request->flash();
-        }
-
         // view
         return view('index', [
             'successMessage' =>  $result['success'] ? 'The ticket has been created successfully!' : null,

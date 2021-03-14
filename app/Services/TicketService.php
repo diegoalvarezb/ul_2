@@ -13,16 +13,16 @@ class TicketService extends Service
      *
      * @var \App\Services\QRService
      */
-    protected $QRService;
+    protected $qrService;
 
     /**
      * Construct function.
      *
      * @return void
      */
-    public function __construct(QRService $QRService)
+    public function __construct(QRService $qrService)
     {
-        $this->QRService = $QRService;
+        $this->qrService = $qrService;
     }
 
     /**
@@ -35,13 +35,8 @@ class TicketService extends Service
      */
     public function create(array $data) : array
     {
-        // check limits
-        $ticketLimits = config('constants.ticket_limits');
-
-        $ticketType   = $data['type'];
-        $countTickets = Ticket::where('type', $ticketType)->count();
-
-        if ($countTickets >= $ticketLimits[$ticketType]) {
+        // check limit
+        if (!$this->checkLimit($data['type'])) {
             return $this->response(null, 'There aren\'t any ticket available for that type.');
         }
 
@@ -50,23 +45,38 @@ class TicketService extends Service
         $ticket->fill($data);
 
         $ticket->address = implode(' ', array_filter([
-            $data['street'],
-            $data['city'],
-            $data['country'],
-            $data['zip']
+            $data['street']  ?? null,
+            $data['city']    ?? null,
+            $data['country'] ?? null,
+            $data['zip']     ?? null
         ]));
 
         $ticket->save();
 
+        // check result
         if (!$ticket) {
             return $this->response(null, 'There\'s been an error creating the ticket, please try again in a few minutes.');
         }
 
-        // send email
+        // send email with QR code attached
         $ticket->notify(new TicketCreated(
-            $this->QRService->create()
+            $this->qrService->create()
         ));
 
         return $this->response($ticket);
+    }
+
+    /**
+     * Check if the limit of a ticket type has been reached.
+     *
+     * @param  string $ticketType
+     * @return boolean
+     */
+    protected function checkLimit(string $ticketType) : bool
+    {
+        $ticketLimits = config('constants.ticket_limits');
+        $countTickets = Ticket::where('type', $ticketType)->count();
+
+        return $countTickets < $ticketLimits[$ticketType];
     }
 }

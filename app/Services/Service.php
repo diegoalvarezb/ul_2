@@ -5,7 +5,8 @@ namespace App\Services;
 abstract class Service
 {
     /**
-     * Generate a service respone.
+     * Generate a service response.
+     * This provides an interface to check the result of a service execution.
      *
      * @param  mixed  $data
      * @return mixed|null
