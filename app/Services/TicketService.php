@@ -37,7 +37,7 @@ class TicketService extends Service
     {
         // check limit
         if (!$this->checkLimit($data['type'])) {
-            return $this->response(null, 'There aren\'t any ticket available for that type.');
+            return $this->response(null, 'There isn\'t any ticket available for that type.');
         }
 
         // create ticket
